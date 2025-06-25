@@ -43,6 +43,13 @@ const Hero = () => (
         <a href="mailto:subhasishpanda25@gmail.com" className="btn-outline">
           Get In Touch
         </a>
+        <a
+          href="/Subhasish_Panda_Resume.pdf"
+          download
+          className="btn-primary"
+        >
+          Download Resume
+        </a>
       </div>
 
       {/* === Socials === */}
