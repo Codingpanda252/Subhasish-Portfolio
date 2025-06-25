@@ -7,7 +7,7 @@ const Experience = () => (
     <div className="absolute w-96 h-96 bg-gradient-to-br from-yellow-400/10 to-orange-400/10 rounded-full blur-3xl pointer-events-none right-[calc(50%-12rem)] top-12 -z-10" />
     <div className="max-w-6xl mx-auto">
       <h2 className="text-5xl md:text-6xl font-extrabold text-center mb-16 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
-        Professional Experience
+        Experience
       </h2>
       <div className="space-y-12">
         {experience.map((exp, i) => (
