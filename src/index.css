@@ -2,7 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   font-family: 'Inter', sans-serif;
@@ -11,8 +12,9 @@ html, body {
   color: #ffffff;
   overscroll-behavior: none;
   height: 100%;
+  width: 100%;
+  overflow-x: hidden;
 }
-
 
 /* === Scrollbar === */
 ::-webkit-scrollbar {
@@ -38,39 +40,46 @@ html, body {
 .btn-primary {
   @apply px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-semibold hover:from-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg;
 }
-
 .btn-outline {
   @apply px-8 py-3 border-2 border-purple-400 text-purple-400 rounded-full font-semibold hover:bg-purple-400 hover:text-white transition-all duration-300;
 }
 
-/* === Card === */
+/* === Cards === */
 .card {
   @apply bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300 hover:scale-105;
 }
-
 .card-icon {
   @apply text-5xl mb-4;
 }
-
 .card-title {
   @apply text-xl font-bold mb-2 text-purple-300;
 }
-
 .card-subtitle {
   @apply text-white/80 font-semibold mb-3;
 }
-
 .card-text {
   @apply text-white/70 mb-4 leading-relaxed;
 }
-
 .card-tag {
   @apply px-2 py-1 bg-purple-500/20 rounded-full text-xs text-purple-300 border border-purple-500/30;
 }
 
-/* === Image === */
+/* === Images === */
 .img-rounded {
   @apply w-full h-auto rounded-xl shadow-xl;
+}
+.fade-in-image {
+  animation: fadeIn 0.8s ease-in-out;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* === Footer === */
@@ -83,7 +92,7 @@ html, body {
   @apply w-28 h-28 mx-auto bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white text-4xl;
 }
 
-/* === Timeline Item === */
+/* === Timeline === */
 .timeline-item {
   @apply relative flex items-start gap-8 mb-10;
 }
@@ -92,7 +101,7 @@ html, body {
   @apply absolute w-3 h-3 bg-purple-400 rounded-full left-[1.25rem] top-6 z-10;
 }
 
-/* === Achievements Card === */
+/* === Achievements === */
 .achievement-card {
   @apply flex flex-col items-center text-center gap-3 p-6 bg-white/10 border border-white/20 rounded-2xl hover:bg-white/15 transition-all duration-300;
 }
@@ -106,17 +115,17 @@ html, body {
   @apply text-white/70 text-sm;
 }
 
-/* === Gallery Card === */
+/* === Gallery === */
 .gallery-card {
   @apply bg-white/10 p-4 rounded-xl border border-white/20 text-center hover:bg-white/15 transition duration-300 hover:scale-105;
 }
 
-/* === Section Padding === */
+/* === Section === */
 .section {
   @apply py-20 px-6;
 }
 
-/* === Experience Card === */
+/* === Experience === */
 .experience-card {
   @apply bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300;
 }
@@ -137,4 +146,17 @@ html, body {
 }
 .experience-description {
   @apply text-white/80 leading-relaxed;
+}
+
+/* === Slow Spin Animation === */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.animate-spin-slow {
+  animation: spin-slow 12s linear infinite;
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { timeline, TimelineItem } from '../data/timeline';
 import {
   Briefcase, Flag, Rocket, School, GraduationCap, Globe,
-  Users, Flame, Award, Code2, Lightbulb, Building2, BookUser, BrainCircuit, ShieldCheck
+  Users, Flame, Award, Code2, Lightbulb, BookUser, BrainCircuit, ShieldCheck
 } from 'lucide-react';
 
 const iconMap: Record<TimelineItem['icon'], JSX.Element> = {
@@ -26,6 +26,14 @@ const highlightIconMap: Record<string, JSX.Element> = {
   'Academic Journey Begins': <BookUser size={16} />
 };
 
+const highlightStyleMap: Record<string, string> = {
+  'International Research Fellowship': 'text-yellow-300',
+  'Government Internship Experience': 'text-green-300',
+  'Leadership & Community Building': 'text-pink-300',
+  'Tech Culture Initiator': 'text-red-300',
+  'Academic Journey Begins': 'text-blue-300'
+};
+
 const Timeline = () => (
   <section id="timeline" className="py-24 px-6 relative">
     <div className="absolute w-96 h-96 bg-gradient-to-r from-purple-400/10 to-pink-400/10 rounded-full blur-3xl pointer-events-none -z-10 left-[calc(50%-12rem)] top-10" />
@@ -40,6 +48,7 @@ const Timeline = () => (
             const isJapan = item.icon === 'japan';
             const mainIcon = iconMap[item.icon] || <Flag size={28} className="text-white" />;
             const highlightIcon = item.highlight ? highlightIconMap[item.highlight] : null;
+            const highlightClass = item.highlight ? highlightStyleMap[item.highlight] : 'text-yellow-300';
 
             return (
               <div key={i} className="relative flex items-start gap-8 transition-all duration-300 hover:scale-[1.03] group">
@@ -68,7 +77,7 @@ const Timeline = () => (
                     {item.desc}
                   </p>
                   {item.highlight && (
-                    <div className="mt-3 text-yellow-300 font-medium text-xs md:text-sm flex items-center gap-2">
+                    <div className={`mt-3 font-medium text-xs md:text-sm flex items-center gap-2 ${highlightClass}`}>
                       {highlightIcon} {item.highlight}
                     </div>
                   )}

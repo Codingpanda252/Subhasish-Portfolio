@@ -1,29 +1,78 @@
 import React from 'react';
 import { achievements } from '../data/achievements';
 import {
-  Award,
-  Trophy,
-  Star,
-  Laptop,
-  Medal,
-  Globe,
-  ShieldCheck,
-  Sparkles,
-  Lightbulb,
-  BadgeCheck
+  Award, Trophy, Star, Laptop, Medal, Globe,
+  ShieldCheck, UserCheck, Target
 } from 'lucide-react';
 
 const iconMap: Record<string, JSX.Element> = {
-  trophy: <Trophy size={40} className="text-pink-400 group-hover:text-pink-300 transition" />,
-  award: <Award size={40} className="text-purple-400 group-hover:text-purple-300 transition" />,
-  star: <Star size={40} className="text-yellow-300 group-hover:text-yellow-200 transition" />,
-  laptop: <Laptop size={40} className="text-blue-400 group-hover:text-blue-300 transition" />,
-  medal: <Medal size={40} className="text-green-400 group-hover:text-green-300 transition" />,
-  globe: <Globe size={40} className="text-yellow-300 animate-pulse" />,
-  shield: <ShieldCheck size={40} className="text-indigo-300 group-hover:text-indigo-200 transition" />,
-  sparkle: <Sparkles size={40} className="text-pink-300" />,
-  idea: <Lightbulb size={40} className="text-yellow-200" />,
-  badge: <BadgeCheck size={40} className="text-purple-300" />
+  trophy: <Trophy size={40} />,
+  award: <Award size={40} />,
+  star: <Star size={40} />,
+  laptop: <Laptop size={40} />,
+  medal: <Medal size={40} />,
+  globe: <Globe size={40} />,
+  shield: <ShieldCheck size={40} />,
+  mentor: <UserCheck size={40} />,
+  target: <Target size={40} />
+};
+
+const tileThemes: Record<string, {
+  bg: string;
+  border: string;
+  text: string;
+  highlight: string;
+  highlightColor: string;
+  highlightIcon: JSX.Element;
+}> = {
+  'WCRP Research Fellow': {
+    bg: 'bg-gradient-to-br from-yellow-100/20 to-orange-100/10',
+    border: 'border-yellow-300',
+    text: 'text-yellow-300',
+    highlight: 'International Research Fellowship',
+    highlightColor: 'text-yellow-300',
+    highlightIcon: <Globe size={14} />
+  },
+  '12x Hackathon Champion': {
+    bg: 'bg-gradient-to-br from-purple-600/20 to-pink-500/10',
+    border: 'border-pink-300',
+    text: 'text-pink-300',
+    highlight: 'Hackathon Excellence',
+    highlightColor: 'text-pink-400',
+    highlightIcon: <Trophy size={14} />
+  },
+  'Top 5% Performer': {
+    bg: 'bg-gradient-to-br from-yellow-200/10 to-yellow-300/10',
+    border: 'border-yellow-200',
+    text: 'text-yellow-200',
+    highlight: 'Top 5% Achiever',
+    highlightColor: 'text-yellow-200',
+    highlightIcon: <Target size={14} />
+  },
+  'NRL Clean Energy Finalist': {
+    bg: 'bg-gradient-to-br from-indigo-300/10 to-indigo-500/10',
+    border: 'border-indigo-300',
+    text: 'text-indigo-300',
+    highlight: 'Finalist – Energy Innovation',
+    highlightColor: 'text-indigo-300',
+    highlightIcon: <ShieldCheck size={14} />
+  },
+  'Hackathon Mentor': {
+    bg: 'bg-gradient-to-br from-blue-300/10 to-blue-500/10',
+    border: 'border-blue-300',
+    text: 'text-blue-300',
+    highlight: 'Mentorship & Guidance',
+    highlightColor: 'text-blue-300',
+    highlightIcon: <UserCheck size={14} />
+  },
+  'Hackathon Series Winner': {
+    bg: 'bg-gradient-to-br from-green-300/10 to-green-500/10',
+    border: 'border-green-300',
+    text: 'text-green-300',
+    highlight: 'Multi Hackathon Champion',
+    highlightColor: 'text-green-300',
+    highlightIcon: <Medal size={14} />
+  }
 };
 
 const Achievements = () => (
@@ -37,45 +86,33 @@ const Achievements = () => (
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
         {achievements.map((ach, i) => {
-          const isHackathon = ach.title.toLowerCase().includes('hackathon');
-          const icon = iconMap[ach.icon] || <Award size={40} className="text-purple-300" />;
+          const theme = tileThemes[ach.title] || {
+            bg: 'bg-white/10',
+            border: 'border-white/20',
+            text: 'text-purple-300',
+            highlight: '',
+            highlightColor: 'text-white/70',
+            highlightIcon: <Award size={14} />
+          };
 
           return (
             <div
               key={i}
-              className={`group text-center rounded-3xl p-6 border transition-all duration-300 hover:scale-[1.035] shadow-xl hover:shadow-2xl ${
-                ach.special
-                  ? 'bg-gradient-to-br from-yellow-100/20 via-yellow-300/10 to-orange-100/10 border-yellow-300'
-                  : isHackathon
-                  ? 'bg-gradient-to-r from-purple-600/20 to-pink-500/10 border-pink-300'
-                  : 'bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/15'
-              }`}
+              className={`group text-center rounded-3xl p-6 border ${theme.bg} ${theme.border} hover:scale-[1.035] shadow-xl hover:shadow-2xl transition-all duration-300`}
             >
-              <div className="mb-4 flex justify-center">{icon}</div>
+              <div className={`mb-4 flex justify-center ${theme.text}`}>
+                {iconMap[ach.icon] || <Award size={40} />}
+              </div>
 
-              <h3
-                className={`text-lg font-bold mb-2 ${
-                  ach.special
-                    ? 'text-yellow-300'
-                    : isHackathon
-                    ? 'text-pink-300'
-                    : 'text-purple-300'
-                }`}
-              >
+              <h3 className={`text-lg font-bold mb-2 ${theme.text}`}>
                 {ach.title}
               </h3>
 
               <p className="text-white/80 text-sm leading-relaxed">{ach.desc}</p>
 
-              {ach.special && (
-                <div className="mt-3 text-xs font-semibold text-yellow-300 flex items-center justify-center gap-2 drop-shadow-[0_0_4px_rgba(255,215,0,0.6)]">
-                  <Globe size={14} /> International Achievement
-                </div>
-              )}
-
-              {isHackathon && !ach.special && (
-                <div className="mt-3 text-xs font-medium text-pink-400 flex items-center justify-center gap-2 drop-shadow-[0_0_3px_rgba(255,105,180,0.5)]">
-                  <Trophy size={14} /> Hackathon Excellence
+              {theme.highlight && (
+                <div className={`mt-3 text-xs font-medium flex items-center justify-center gap-2 ${theme.highlightColor}`}>
+                  {theme.highlightIcon} {theme.highlight}
                 </div>
               )}
             </div>
