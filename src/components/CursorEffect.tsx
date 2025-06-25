@@ -2,23 +2,34 @@ import React, { useEffect, useState } from 'react';
 
 const CursorEffect: React.FC = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    document.body.style.cursor = 'none';
-    window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      document.body.style.cursor = '';
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
+    const checkIsMobile = () => setIsMobile(window.innerWidth < 768);
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    return () => window.removeEventListener('resize', checkIsMobile);
   }, []);
 
+  useEffect(() => {
+    if (!isMobile) {
+      const handleMouseMove = (e: MouseEvent) => {
+        setMousePosition({ x: e.clientX, y: e.clientY });
+      };
+
+      document.body.style.cursor = 'none';
+      window.addEventListener('mousemove', handleMouseMove);
+      return () => {
+        document.body.style.cursor = '';
+        window.removeEventListener('mousemove', handleMouseMove);
+      };
+    }
+  }, [isMobile]);
+
+  if (isMobile) return null;
+
   return (
-    <div className="fixed inset-0 pointer-events-none z-[9999]">
+    <div className="fixed inset-0 overflow-hidden pointer-events-none z-[9999]">
       {[...Array(30)].map((_, i) => (
         <div
           key={i}
@@ -33,7 +44,7 @@ const CursorEffect: React.FC = () => {
       ))}
 
       <div
-        className="absolute w-4 h-4 bg-white border-2 border-pink-400 rounded-full shadow-md z-50"
+        className="absolute w-6 h-6 rounded-full bg-gradient-to-tr from-purple-500 via-pink-500 to-yellow-400 shadow-lg animate-pulse"
         style={{
           transform: 'translate(-50%, -50%)',
           left: mousePosition.x,
@@ -42,7 +53,7 @@ const CursorEffect: React.FC = () => {
       />
 
       <div
-        className="absolute w-20 h-20 bg-pink-400/10 rounded-full blur-2xl transition-all duration-300 z-40"
+        className="absolute w-24 h-24 bg-pink-400/10 rounded-full blur-2xl transition-all duration-300"
         style={{
           transform: 'translate(-50%, -50%)',
           left: mousePosition.x,
