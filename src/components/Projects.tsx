@@ -64,7 +64,7 @@ const EnhancedArcadePortfolio: React.FC = () => {
         startSfx.play();
         if (bgMusic.paused) {
           bgMusic.currentTime = 0;
-          bgMusic.play().catch(() => { });
+          bgMusic.play().catch(() => {});
         }
       }
       setSelected(0);
@@ -113,7 +113,7 @@ const EnhancedArcadePortfolio: React.FC = () => {
       bgMusic.pause();
     } else {
       if (!bgMusic.paused && selected !== null) {
-        bgMusic.play().catch(() => { });
+        bgMusic.play().catch(() => {});
       }
     }
   }, [mute, selected]);
@@ -164,7 +164,6 @@ const EnhancedArcadePortfolio: React.FC = () => {
     }
   };
 
-
   const diffColor = (d: string) =>
     ({ EXPERT: 'text-red-400', MASTER: 'text-purple-400', ADVANCED: 'text-yellow-400' }[d] || 'text-green-400');
 
@@ -172,7 +171,10 @@ const EnhancedArcadePortfolio: React.FC = () => {
     ({ ACTIVE: 'text-green-400 animate-pulse', BETA: 'text-yellow-400', COMPLETE: 'text-blue-400' }[s] || 'text-gray-400');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black p-4 md:p-6 text-white font-mono">
+    <div
+      id="projects"
+      className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black p-4 md:p-6 text-white font-mono"
+    >
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
         <div className="text-center sm:text-left">
           <h1 className="text-4xl sm:text-6xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-red-400">
@@ -187,9 +189,7 @@ const EnhancedArcadePortfolio: React.FC = () => {
             <BarChart2 className="mr-1 text-green-400" />
             {fps} FPS
           </div>
-          <button onClick={() => setMute(!mute)}>
-            {mute ? <VolumeX size={24} /> : <Volume2 size={24} />}
-          </button>
+          <button onClick={() => setMute(!mute)}>{mute ? <VolumeX size={24} /> : <Volume2 size={24} />}</button>
           <button onClick={toggleFullscreen}>
             {isFullscreen ? <Minimize2 size={24} /> : <Maximize2 size={24} />}
           </button>
@@ -304,12 +304,12 @@ const EnhancedArcadePortfolio: React.FC = () => {
               key={action}
               onClick={() => press(action)}
               className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full border-4 text-xs font-bold ${action === 'start'
-                  ? 'bg-red-600 border-red-500'
-                  : action === 'next'
-                    ? 'bg-yellow-400 border-yellow-300 text-black'
-                    : action === 'prev'
-                      ? 'bg-green-500 border-green-400'
-                      : 'bg-blue-500 border-blue-400'
+                ? 'bg-red-600 border-red-500'
+                : action === 'next'
+                  ? 'bg-yellow-400 border-yellow-300 text-black'
+                  : action === 'prev'
+                    ? 'bg-green-500 border-green-400'
+                    : 'bg-blue-500 border-blue-400'
                 } ${btn[action] ? 'scale-95 shadow-inner' : 'hover:scale-105 shadow-md'}`}
             >
               {action.toUpperCase()}
@@ -323,32 +323,22 @@ const EnhancedArcadePortfolio: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
               <span className="text-green-400 font-bold">KEYBOARD</span>
-              <br />
-              ← → Navigate
-              <br />
-              Enter/Space Start
-              <br />
-              ESC Exit
+              <br /> ← → Navigate
+              <br /> Enter/Space Start
+              <br /> ESC Exit
             </div>
             <div>
               <span className="text-yellow-400 font-bold">TOUCH</span>
-              <br />
-              Swipe ←/→
-              <br />
-              Tap Buttons
-              <br />
-              FullScreen
+              <br /> Swipe ←/→
+              <br /> Tap Buttons
+              <br /> FullScreen
             </div>
             <div>
               <span className="text-purple-400 font-bold">STATS</span>
-              <br />
-              Projects: {projects.length}
-              <br />
-              Views: {viewCounts.reduce((a, b) => a + b, 0)}
-              <br />
-              Mute: {mute ? 'On' : 'Off'}
-              <br />
-              Fullscreen: {isFullscreen ? 'Yes' : 'No'}
+              <br /> Projects: {projects.length}
+              <br /> Views: {viewCounts.reduce((a, b) => a + b, 0)}
+              <br /> Mute: {mute ? 'On' : 'Off'}
+              <br /> Fullscreen: {isFullscreen ? 'Yes' : 'No'}
             </div>
           </div>
         </div>

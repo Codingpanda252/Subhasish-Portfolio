@@ -127,7 +127,6 @@ const UltraAdvancedPokedex = () => {
   const scanRef = useRef(null);
   const particleRef = useRef(null);
 
-  // Advanced particle system
   useEffect(() => {
     if (isPowered && isHologramMode) {
       const interval = setInterval(() => {
@@ -179,14 +178,12 @@ const UltraAdvancedPokedex = () => {
     }
   };
 
-  // System boot sequence
   const handlePowerToggle = () => {
     if (!isPowered) {
       setIsPowered(true);
       setSystemStatus('BOOTING...');
       setScanProgress(0);
 
-      // Boot sequence animation
       const bootSequence = [
         { status: 'INITIALIZING QUANTUM PROCESSORS...', progress: 15 },
         { status: 'LOADING AI NEURAL NETWORKS...', progress: 35 },
@@ -516,7 +513,6 @@ const UltraAdvancedPokedex = () => {
                 </button>
               </div>
 
-              {/* Advanced Features */}
               <div className="flex gap-2">
                 <button
                   onClick={() => setIsHologramMode(!isHologramMode)}
