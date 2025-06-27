@@ -15,7 +15,7 @@ const clickSfx = new Audio('/sfx/click.mp3');
 const startSfx = new Audio('/sfx/start.mp3');
 const bgMusic = new Audio('/sfx/arcade-bg.mp3');
 bgMusic.loop = true;
-bgMusic.volume = 0.1;
+bgMusic.volume = 0.07;
 
 const EnhancedArcadePortfolio: React.FC = () => {
   const [selected, setSelected] = useState<number | null>(null);
@@ -64,7 +64,7 @@ const EnhancedArcadePortfolio: React.FC = () => {
         startSfx.play();
         if (bgMusic.paused) {
           bgMusic.currentTime = 0;
-          bgMusic.play().catch(() => {});
+          bgMusic.play().catch(() => { });
         }
       }
       setSelected(0);
@@ -113,7 +113,7 @@ const EnhancedArcadePortfolio: React.FC = () => {
       bgMusic.pause();
     } else {
       if (!bgMusic.paused && selected !== null) {
-        bgMusic.play().catch(() => {});
+        bgMusic.play().catch(() => { });
       }
     }
   }, [mute, selected]);
@@ -138,19 +138,32 @@ const EnhancedArcadePortfolio: React.FC = () => {
   };
 
   const toggleFullscreen = () => {
-    const el = screenRef.current;
-    if (!document.fullscreenElement && el) {
-      if (el.requestFullscreen) el.requestFullscreen();
-      else if ((el as any).webkitRequestFullscreen) (el as any).webkitRequestFullscreen();
-      else if ((el as any).msRequestFullscreen) (el as any).msRequestFullscreen();
-      setIsFullscreen(true);
-    } else {
+    const elem = screenRef.current;
+
+    if (!elem) return;
+
+    if (
+      document.fullscreenElement ||
+      (document as any).webkitFullscreenElement ||
+      (document as any).mozFullScreenElement ||
+      (document as any).msFullscreenElement
+    ) {
       if (document.exitFullscreen) document.exitFullscreen();
       else if ((document as any).webkitExitFullscreen) (document as any).webkitExitFullscreen();
+      else if ((document as any).mozCancelFullScreen) (document as any).mozCancelFullScreen();
       else if ((document as any).msExitFullscreen) (document as any).msExitFullscreen();
+
       setIsFullscreen(false);
+    } else {
+      if (elem.requestFullscreen) elem.requestFullscreen();
+      else if ((elem as any).webkitRequestFullscreen) (elem as any).webkitRequestFullscreen();
+      else if ((elem as any).mozRequestFullScreen) (elem as any).mozRequestFullScreen();
+      else if ((elem as any).msRequestFullscreen) (elem as any).msRequestFullscreen();
+
+      setIsFullscreen(true);
     }
   };
+
 
   const diffColor = (d: string) =>
     ({ EXPERT: 'text-red-400', MASTER: 'text-purple-400', ADVANCED: 'text-yellow-400' }[d] || 'text-green-400');
@@ -290,15 +303,14 @@ const EnhancedArcadePortfolio: React.FC = () => {
             <button
               key={action}
               onClick={() => press(action)}
-              className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full border-4 text-xs font-bold ${
-                action === 'start'
+              className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full border-4 text-xs font-bold ${action === 'start'
                   ? 'bg-red-600 border-red-500'
                   : action === 'next'
-                  ? 'bg-yellow-400 border-yellow-300 text-black'
-                  : action === 'prev'
-                  ? 'bg-green-500 border-green-400'
-                  : 'bg-blue-500 border-blue-400'
-              } ${btn[action] ? 'scale-95 shadow-inner' : 'hover:scale-105 shadow-md'}`}
+                    ? 'bg-yellow-400 border-yellow-300 text-black'
+                    : action === 'prev'
+                      ? 'bg-green-500 border-green-400'
+                      : 'bg-blue-500 border-blue-400'
+                } ${btn[action] ? 'scale-95 shadow-inner' : 'hover:scale-105 shadow-md'}`}
             >
               {action.toUpperCase()}
             </button>
