@@ -6,15 +6,15 @@ import {
 } from 'lucide-react';
 
 const iconMap: Record<string, JSX.Element> = {
-  trophy: <Trophy size={40} />,
-  award: <Award size={40} />,
-  star: <Star size={40} />,
-  laptop: <Laptop size={40} />,
-  medal: <Medal size={40} />,
-  globe: <Globe size={40} />,
-  shield: <ShieldCheck size={40} />,
-  mentor: <UserCheck size={40} />,
-  target: <Target size={40} />
+  trophy: <Trophy size={40} className="text-pink-400" />,
+  award: <Award size={40} className="text-yellow-400" />,
+  star: <Star size={40} className="text-orange-300" />,
+  laptop: <Laptop size={40} className="text-blue-400" />,
+  medal: <Medal size={40} className="text-green-300" />,
+  globe: <Globe size={40} className="text-purple-300" />,
+  shield: <ShieldCheck size={40} className="text-indigo-300" />,
+  mentor: <UserCheck size={40} className="text-blue-300" />,
+  target: <Target size={40} className="text-yellow-300" />
 };
 
 const tileThemes: Record<string, {
@@ -76,15 +76,15 @@ const tileThemes: Record<string, {
 };
 
 const Achievements = () => (
-  <section id="achievements" className="py-24 px-6 relative">
-    <div className="absolute w-96 h-96 bg-gradient-to-r from-yellow-200/10 via-pink-200/10 to-purple-300/10 rounded-full blur-3xl pointer-events-none -z-10 left-[calc(50%-12rem)] top-10" />
+  <section id="achievements" className="py-24 px-6 relative bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="absolute w-96 h-96 bg-gradient-to-r from-yellow-200/10 via-pink-200/10 to-purple-300/10 rounded-full blur-3xl pointer-events-none -z-10 left-[calc(50%-12rem)] top-10 animate-pulse" />
 
     <div className="max-w-6xl mx-auto">
-      <h2 className="text-5xl md:text-6xl font-extrabold text-center mb-16 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+      <h2 className="text-5xl md:text-6xl font-extrabold text-center mb-16 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] animate-fade-in">
         Achievements
       </h2>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {achievements.map((ach, i) => {
           const theme = tileThemes[ach.title] || {
             bg: 'bg-white/10',
@@ -98,20 +98,22 @@ const Achievements = () => (
           return (
             <div
               key={i}
-              className={`group text-center rounded-3xl p-6 border ${theme.bg} ${theme.border} hover:scale-[1.035] shadow-xl hover:shadow-2xl transition-all duration-300`}
+              className={`group text-center rounded-3xl p-6 border ${theme.bg} ${theme.border} transform transition-all duration-500 hover:scale-105 hover:rotate-1 shadow-xl hover:shadow-purple-500/30 animate-slide-in-up`}
             >
-              <div className={`mb-4 flex justify-center ${theme.text}`}>
-                {iconMap[ach.icon] || <Award size={40} />}
+              <div className={`mb-4 flex justify-center ${theme.text} animate-fade-in delay-[${i * 100}ms]`}>
+                {iconMap[ach.icon] || <Award size={40} className="text-purple-300" />}
               </div>
 
-              <h3 className={`text-lg font-bold mb-2 ${theme.text}`}>
+              <h3 className={`text-lg font-bold mb-2 ${theme.text} transition-colors duration-300 group-hover:text-white`}>
                 {ach.title}
               </h3>
 
-              <p className="text-white/80 text-sm leading-relaxed">{ach.desc}</p>
+              <p className="text-white/80 text-sm leading-relaxed transition-opacity duration-500 group-hover:opacity-100">
+                {ach.desc}
+              </p>
 
               {theme.highlight && (
-                <div className={`mt-3 text-xs font-medium flex items-center justify-center gap-2 ${theme.highlightColor}`}>
+                <div className={`mt-3 text-xs font-medium flex items-center justify-center gap-2 ${theme.highlightColor} animate-bounce-slow`}>
                   {theme.highlightIcon} {theme.highlight}
                 </div>
               )}
@@ -120,6 +122,44 @@ const Achievements = () => (
         })}
       </div>
     </div>
+
+    <style jsx>{`
+      @keyframes slide-in-up {
+        0% {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes bounce-slow {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+      @keyframes fade-in {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      .animate-slide-in-up {
+        animation: slide-in-up 0.7s ease forwards;
+      }
+      .animate-bounce-slow {
+        animation: bounce-slow 2s infinite;
+      }
+      .animate-fade-in {
+        animation: fade-in 1.2s ease forwards;
+      }
+    `}</style>
   </section>
 );
 
