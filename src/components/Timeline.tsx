@@ -884,6 +884,14 @@ const UltraAdvancedPokedex = () => {
         )}
       </div>
 
+      {!isPowered && (
+        <div className="absolute top-8 left-1/2 transform -translate-x-1/2 text-center">
+          <p className="text-white/40 text-sm font-mono animate-pulse">
+            ⚡ POKÉDEX ULTRA ∞ | TIMELINE ANALYZER ⚡
+          </p>
+        </div>
+      )}
+
       {isPowered && (
         <div className="absolute top-8 left-8 space-y-2 pointer-events-none">
           <div className="flex items-center gap-1 text-cyan-300 font-mono text-xs tracking-wide opacity-80">

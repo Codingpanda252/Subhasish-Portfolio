@@ -14,6 +14,12 @@ const sections = [
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    const interval = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -61,6 +67,11 @@ const Header: React.FC = () => {
           Codingpanda252
         </div>
 
+        {/* Live Time */}
+        <div className="hidden md:block text-sm text-white/80 font-mono">
+          {time.toLocaleDateString()} — {time.toLocaleTimeString()}
+        </div>
+
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-4">
           {sections.map((section) => (
@@ -68,7 +79,7 @@ const Header: React.FC = () => {
               key={section}
               onClick={() => scrollToSection(section)}
               className={`capitalize text-sm font-medium px-4 py-2 rounded-lg transition-all duration-300
-              ${activeSection === section
+                ${activeSection === section
                   ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white scale-105 shadow-lg ring-2 ring-pink-400/60 ring-offset-2'
                   : 'text-white/80 hover:text-white hover:bg-white/10 hover:scale-105'
                 }`}
@@ -78,6 +89,7 @@ const Header: React.FC = () => {
           ))}
         </nav>
 
+        {/* Mobile Menu Button */}
         <div className="md:hidden">
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -85,22 +97,15 @@ const Header: React.FC = () => {
             aria-label="Toggle menu"
           >
             <div className="flex flex-col justify-between w-6 h-5">
-              <span
-                className={`block h-0.5 bg-white transition-transform duration-300 ${isMenuOpen ? 'transform rotate-45 translate-y-2' : ''
-                  }`}
-              />
-              <span
-                className={`block h-0.5 bg-white transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`}
-              />
-              <span
-                className={`block h-0.5 bg-white transition-transform duration-300 ${isMenuOpen ? 'transform -rotate-45 -translate-y-2' : ''
-                  }`}
-              />
+              <span className={`block h-0.5 bg-white transition-transform duration-300 ${isMenuOpen ? 'transform rotate-45 translate-y-2' : ''}`} />
+              <span className={`block h-0.5 bg-white transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`} />
+              <span className={`block h-0.5 bg-white transition-transform duration-300 ${isMenuOpen ? 'transform -rotate-45 -translate-y-2' : ''}`} />
             </div>
           </button>
         </div>
       </div>
 
+      {/* Mobile Menu */}
       <div
         className={`md:hidden fixed top-16 left-0 w-full bg-black/90 backdrop-blur-lg border-t border-white/10 py-4 px-4 space-y-2 transition-all duration-300 ${isMenuOpen ? 'block' : 'hidden'
           }`}
@@ -110,7 +115,7 @@ const Header: React.FC = () => {
             key={section}
             onClick={() => scrollToSection(section)}
             className={`block w-full text-left capitalize text-white/80 py-3 px-4 rounded-md text-base tracking-wide
-            ${activeSection === section
+              ${activeSection === section
                 ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold shadow-md ring-2 ring-pink-400/50'
                 : 'hover:bg-white/10 hover:text-white'
               }`}
